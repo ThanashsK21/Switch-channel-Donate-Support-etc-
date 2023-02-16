@@ -1,0 +1,58 @@
+ var tolias = [];
+  client.on('voiceStateUpdate', async (oldMember, newMessage) => {
+    const user = await client.users.fetch(newMessage.id);
+    const member = newMessage.guild.member(user);
+
+    if (newMessage.channelID === '966342739325231185') {
+      await newMessage.guild.channels.create("💸 Donate Hard Core", {
+        type: 'voice',
+        parent: newMessage.channel.parentID,
+        permissionOverwrites: [
+          {
+            id: newMessage.guild.roles.cache.get('1020741301009924166'),
+            allow: ['VIEW_CHANNEL', 'STREAM'],
+            deny: ['CONNECT']
+          },
+          {
+            id: newMessage.guild.roles.cache.get('793142574444838952'),
+            allow: ['VIEW_CHANNEL', 'CONNECT', 'STREAM'],
+          },
+          {
+            id: newMessage.guild.roles.cache.get('715483937664794654'),
+            allow: ['VIEW_CHANNEL', 'CONNECT', 'STREAM'],
+          },
+          {
+            id: newMessage.guild.roles.everyone,
+            deny: ['VIEW_CHANNEL']
+          },
+        ],
+
+      }).then(async channel => {
+        tolias.push({ newID: channel.id, guild: channel.guild });
+        await newMessage.setChannel(channel.id)
+
+      });
+      const logchannel = client.channels.cache.get('769380468243955732'); // channel id
+      const embed = new Discord.MessageEmbed()
+        .setColor("ff0000")
+        .setTimestamp(Date.now())
+        .setDescription(`
+> ${member} \`joined 💸Waiting for donate Hard Core\`
+> \`Connect to the channel\` ${newMessage.channel}`);
+
+      logchannel.send(`<@&${"715483937664794654"}>`, {
+        //role id
+        embed: embed,
+      });
+
+    }
+
+    if (tolias.length > 0) for (let i = 0; i < tolias.length; i++) {
+      let cad = client.channels.cache.get(tolias[i].newID)
+      if (cad.members.size === 0) {
+        cad.delete().catch(() => []);
+        return tolias.splice(i, 1)
+
+      }
+    }
+  })
