@@ -1,24 +1,24 @@
- var tolias = [];
+ var ThanashsK = [];
   client.on('voiceStateUpdate', async (oldMember, newMessage) => {
     const user = await client.users.fetch(newMessage.id);
     const member = newMessage.guild.member(user);
 
-    if (newMessage.channelID === '966342739325231185') {
-      await newMessage.guild.channels.create("💸 Donate Hard Core", {
+    if (newMessage.channelID === 'Channel ID') {
+      await newMessage.guild.channels.create("Donate", {
         type: 'voice',
         parent: newMessage.channel.parentID,
         permissionOverwrites: [
           {
-            id: newMessage.guild.roles.cache.get('1020741301009924166'),
+            id: newMessage.guild.roles.cache.get('Role ID Stream'), // Role ID Stream
             allow: ['VIEW_CHANNEL', 'STREAM'],
             deny: ['CONNECT']
           },
           {
-            id: newMessage.guild.roles.cache.get('793142574444838952'),
+            id: newMessage.guild.roles.cache.get('Role Manager'), // Role Manager
             allow: ['VIEW_CHANNEL', 'CONNECT', 'STREAM'],
           },
           {
-            id: newMessage.guild.roles.cache.get('715483937664794654'),
+            id: newMessage.guild.roles.cache.get('Role Donate Manager'), // Role Donate Manager
             allow: ['VIEW_CHANNEL', 'CONNECT', 'STREAM'],
           },
           {
@@ -32,26 +32,27 @@
         await newMessage.setChannel(channel.id)
 
       });
-      const logchannel = client.channels.cache.get('769380468243955732'); // channel id
+      
+      // Log Channel
+      const logchannel = client.channels.cache.get('Channel ID'); // Channel ID
       const embed = new Discord.MessageEmbed()
         .setColor("ff0000")
         .setTimestamp(Date.now())
         .setDescription(`
-> ${member} \`joined 💸Waiting for donate Hard Core\`
+> ${member} \`joined Waiting for donate\`
 > \`Connect to the channel\` ${newMessage.channel}`);
 
-      logchannel.send(`<@&${"715483937664794654"}>`, {
-        //role id
+      logchannel.send(`<@&${"role id"}>`, {
         embed: embed,
       });
 
     }
 
-    if (tolias.length > 0) for (let i = 0; i < tolias.length; i++) {
-      let cad = client.channels.cache.get(tolias[i].newID)
+    if (ThanashsK.length > 0) for (let i = 0; i < ThanashsK.length; i++) {
+      let cad = client.channels.cache.get(ThanashsK[i].newID)
       if (cad.members.size === 0) {
         cad.delete().catch(() => []);
-        return tolias.splice(i, 1)
+        return ThanashsK.splice(i, 1)
 
       }
     }
